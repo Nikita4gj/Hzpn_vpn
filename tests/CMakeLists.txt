@@ -9,4 +9,4 @@ add_executable(unit_tests version_test.cpp)
 target_link_libraries(unit_tests PRIVATE GTest::gtest_main hzpn_core)
 
 include(GoogleTest)
-gtest_discover_tests(unit_tests)
+gtest_discover_tests(unit_tests DISCOVERY_MODE PRE_TEST)
