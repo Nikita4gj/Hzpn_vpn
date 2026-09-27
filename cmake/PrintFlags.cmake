@@ -1,0 +1,15 @@
+option(HZPN_PRINT_FLAGS "Печатать флаги сборки" OFF)
+
+function(hzpn_print_flags) #* функиця, которая выводит конфигурации, тип сборки и флаги компилятора у конфигураций
+    message(STATUS "================== CMAKE COMPILER FLAGS ==================")
+    message(STATUS "Current Build Type:   ${CMAKE_BUILD_TYPE}")
+    message(STATUS "Configuration Types:  ${CMAKE_CONFIGURATION_TYPES}")
+    message(STATUS "General CXX Flags:    ${CMAKE_CXX_FLAGS}")
+    message(STATUS "DEBUG CXX Flags:      ${CMAKE_CXX_FLAGS_DEBUG}")
+    message(STATUS "RELEASE CXX Flags:    ${CMAKE_CXX_FLAGS_RELEASE}")
+    message(STATUS "RELWITHDEBINFO:       ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
+    message(STATUS "MINSIZEREL:           ${CMAKE_CXX_FLAGS_MINSIZEREL}")
+    message(STATUS "Coverage:             ${CMAKE_CXX_FLAGS_COVERAGE}")
+    message(STATUS "Asan:                 ${CMAKE_CXX_FLAGS_ASAN}")
+    message(STATUS "==========================================================")
+endfunction()

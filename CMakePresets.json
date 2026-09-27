@@ -1,0 +1,98 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "base",
+            "generator": "Ninja Multi-Config",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build"
+        },
+        {
+            "name": "default",
+            "displayName": "Сборка для локальной разработки",
+            "inherits": "base",
+            "cacheVariables": { "HZPN_PRINT_FLAGS": "OFF", 
+                                "HZPN_WARNINGS_AS_ERRORS": "OFF" }
+        },
+        {
+            "name": "ci",
+            "displayName": "Сборка для CI",
+            "inherits": "base",
+            "cacheVariables": { "HZPN_WARNINGS_AS_ERRORS": "ON" }
+        }
+    ],
+
+    "buildPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "default",
+            "configuration": "Debug"
+        },
+        {
+            "name": "release",
+            "configurePreset": "default",
+            "configuration": "Release"
+        },
+        {
+            "name": "asan",
+            "configurePreset": "default",
+            "configuration": "Asan",
+            "environment": {
+                "ASAN_OPTIONS":  "detect_leaks=1:abort_on_error=1",
+                "UBSAN_OPTIONS": "print_stacktrace=1"
+            }
+        },
+        {
+            "name": "coverage",
+            "configurePreset": "default",
+            "configuration": "Coverage"
+        },
+        { 
+            "name": "ci-asan",  
+            "configurePreset": "ci", 
+            "configuration": "Asan" 
+        },
+        { 
+            "name": "ci-debug", 
+            "configurePreset": "ci", 
+            "configuration": "Debug" 
+        }
+    ],
+
+    "testPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "default",
+            "configuration": "Debug",
+            "output": { "outputOnFailure": true }
+        },
+        {
+            "name": "asan",
+            "configurePreset": "default",
+            "configuration": "Asan",
+            "output": { "outputOnFailure": true },
+            "environment": {
+                "ASAN_OPTIONS": "detect_leaks=1:abort_on_error=1",
+                "UBSAN_OPTIONS": "print_stacktrace=1"
+            }           
+        },
+        { 
+            "name": "ci-debug", 
+            "configurePreset": "ci", 
+            "inherits": "debug"
+        },
+        {
+            "name": "ci-asan",  
+            "configurePreset": "ci", 
+            "inherits": "asan"
+        }
+    ],
+
+    "workflowPresets": [
+        {"name": "ci", "steps": [
+            {"type": "configure", "name": "ci"},
+            {"type": "build",     "name": "ci-asan"},
+            {"type": "test",      "name": "ci-asan"}
+        ]}
+    ]
+}
