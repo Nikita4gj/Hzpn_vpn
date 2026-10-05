@@ -89,7 +89,12 @@
     ],
 
     "workflowPresets": [
-        {"name": "ci", "steps": [
+        {"name": "ci-debug", "steps": [
+            {"type": "configure", "name": "ci"},
+            {"type": "build",     "name": "ci-debug"},
+            {"type": "test",      "name": "ci-debug"}
+        ]},
+        {"name": "ci-asan", "steps": [
             {"type": "configure", "name": "ci"},
             {"type": "build",     "name": "ci-asan"},
             {"type": "test",      "name": "ci-asan"}
